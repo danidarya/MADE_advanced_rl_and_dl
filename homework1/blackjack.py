@@ -8,7 +8,7 @@ class BlackjackEnvCount(BlackjackEnv):
     
     def step(self, action):
         assert self.action_space.contains(action)
-        if action:  # hit: add a card to players hand and return
+        if action:  
             self.player.append(draw_card())
             if is_bust(self.player):
                 done = True
@@ -16,7 +16,7 @@ class BlackjackEnvCount(BlackjackEnv):
             else:
                 done = False
                 reward = 0.0
-        else:  # stick: play out the dealers hand, and score
+        else:  
             done = True
             while sum_hand(self.dealer) < 17:
                 self.dealer.append(draw_card())
@@ -26,7 +26,6 @@ class BlackjackEnvCount(BlackjackEnv):
                 and is_natural(self.player)
                 and reward == 1.0
             ):
-                # Natural gives extra points, but doesn't autowin. Legacy implementation
                 reward = 1.5
         return self._get_obs(), reward, done, {}
     
